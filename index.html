@@ -3,168 +3,360 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>YoneRai12 | ORA / VIBE-STACK</title>
-  <meta name="description" content="YoneRai12 の実験場 ORA / VIBE-STACK / LLM / VFX / Web">
+  <title>ORA Hyperwave</title>
+  <meta name="description" content="YoneRai12 が描く最高にクールな未来都市型ポートフォリオ">
   <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#0b0b10">
-  <!-- OGP -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="YoneRai12">
-  <meta property="og:description" content="ORA / VIBE-STACK / LLM / VFX / Web">
-  <meta property="og:url" content="https://yonerai12.github.io/">
-  <meta property="og:image" content="https://yonerai12.github.io/og.png">
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="YoneRai12">
-  <meta name="twitter:description" content="ORA / VIBE-STACK / LLM / VFX / Web">
-  <meta name="twitter:image" content="https://yonerai12.github.io/og.png">
-  <!-- Fonts -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f6ff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#050611">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Favicon (SVG データURIで軽量) -->
-  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="%2306f" /><stop offset="1" stop-color="%23a0f" /></linearGradient></defs><rect width="128" height="128" rx="28" fill="%230b0b10"/><path d="M28 86c0-28 18-44 36-44 18 0 36 16 36 44h-16c0-19-10-28-20-28s-20 9-20 28z" fill="url(%23g)"/></svg>'>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0b0b10; --fg:#e8e8ea; --mut:#a9acb3; --card:#11131a80; --stroke:#ffffff12;
-      --grad1: conic-gradient(from 180deg at 50% -10%, #1b1f30, #0b0b10 40%, #180f24 70%, #1b1f30);
-      --glass: color-mix(in oklab, white 12%, transparent);
+      color-scheme:dark;
+      --bg:#050611;
+      --fg:#f7f9ff;
+      --mut:#95a0c4;
+      --line:#ffffff1c;
+      --accent:#7699ff;
+      --accent-hot:#ff77ff;
+      --glass:color-mix(in srgb, rgba(41,52,102,.85) 70%, transparent);
+      --noise:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="60" height="60" filter="url(%23n)" opacity="0.28"/%3E%3C/svg%3E');
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
     body{
-      margin:0; color:var(--fg); background:radial-gradient(80% 50% at 50% -10%, #1a1f2e 0, transparent 60%), var(--grad1), var(--bg);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    }
-    a{color:inherit; text-decoration:none}
-    .grid-bg{
-      position:fixed; inset:0; pointer-events:none;
+      margin:0;
+      font-family:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
       background:
-        linear-gradient(to right, var(--stroke) 1px, transparent 1px) 0 0/56px 56px,
-        linear-gradient(to bottom, var(--stroke) 1px, transparent 1px) 0 0/56px 56px;
-      mask: radial-gradient(100% 60% at 50% 0%, #000 40%, transparent 80%);
+        radial-gradient(120% 120% at 82% 10%, #151b4a 0%, transparent 55%),
+        radial-gradient(95% 110% at 15% -10%, #21132e 0%, transparent 60%),
+        var(--bg);
+      color:var(--fg);
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
-    .nav{
-      position:sticky; top:0; z-index:10;
-      backdrop-filter: blur(10px); background:rgba(12,14,20,.45);
-      border-bottom:1px solid var(--stroke);
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-40vmax;
+      background:radial-gradient(circle at 20% 30%, rgba(118,153,255,.45) 0, transparent 55%),
+                radial-gradient(circle at 80% 10%, rgba(255,119,255,.35) 0, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(86,243,255,.25) 0, transparent 45%);
+      filter:blur(120px);
+      opacity:.8;
+      animation:slow-orbit 30s linear infinite;
+      z-index:-3;
     }
-    .wrap{max-width:1100px; margin:0 auto; padding:18px 20px}
-    .brand{display:flex; gap:12px; align-items:center; font-weight:900; letter-spacing:-.02em}
-    .brand svg{width:28px; height:28px; flex:none}
-    .hero{min-height:70svh; display:grid; place-items:center; text-align:center; padding:6rem 1rem}
-    .title{
-      font-size:clamp(40px, 8vw, 92px); line-height:1; margin:0;
-      background:linear-gradient(90deg,#7aa8ff, #b388ff 40%, #8ee7ff 70%, #7aa8ff) 0/200% 100%;
-      -webkit-background-clip:text; background-clip:text; color:transparent; animation:shine 9s linear infinite;
-      word-break:keep-all
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:var(--noise);
+      mix-blend-mode:soft-light;
+      opacity:0.25;
+      z-index:-1;
+      pointer-events:none;
     }
-    .tag{margin-top:14px; color:var(--mut); font-size:clamp(14px,2.3vw,18px)}
-    .cta{margin-top:28px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+    @keyframes slow-orbit{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+    a{color:inherit;text-decoration:none;}
+    .neon-grid{
+      position:fixed; inset:0; pointer-events:none; z-index:-2;
+      background:
+        linear-gradient(transparent 0 calc(100% - 90px), rgba(255,255,255,.03) calc(100% - 90px) 100%),
+        repeating-linear-gradient(90deg, transparent, transparent 74px, rgba(255,255,255,.05) 74px, rgba(255,255,255,.05) 76px),
+        repeating-linear-gradient(transparent, transparent 74px, rgba(255,255,255,.05) 74px, rgba(255,255,255,.05) 76px);
+      mask:radial-gradient(110% 60% at 50% -10%, rgba(0,0,0,.8) 30%, transparent 70%);
+      opacity:.55;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      backdrop-filter:blur(16px) saturate(140%);
+      background:rgba(8,10,24,.72);
+      border-bottom:1px solid var(--line);
+      z-index:20;
+    }
+    .wrap{max-width:1180px;margin:0 auto;padding:20px clamp(16px,4vw,48px);}    
+    nav{display:flex;align-items:center;justify-content:space-between;gap:28px;}
+    .brand{display:flex;align-items:center;gap:14px;font-weight:900;letter-spacing:-0.02em;font-size:20px;}
+    .brand svg{width:36px;height:36px;filter:drop-shadow(0 0 18px rgba(118,153,255,.4));}
+    .links{display:flex;gap:14px;flex-wrap:wrap;}
+    .links a{padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:14px;transition:background .2s ease,transform .2s ease;}
+    .links a:hover{background:rgba(255,255,255,.12);transform:translateY(-2px);}
+
+    main{display:grid;gap:5rem;}
+    .hero{padding:clamp(4rem,12vw,9rem) clamp(16px,4vw,48px) 0;display:grid;gap:1.8rem;}
+    .hero h1{margin:0;font-size:clamp(46px,8.6vw,92px);line-height:1;letter-spacing:-.03em;
+      background:linear-gradient(90deg,var(--accent-hot),var(--accent) 50%,#6ef3ff 80%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      animation:shine 12s linear infinite;
+    }
+    .hero p{margin:0;font-size:clamp(18px,2.2vw,22px);color:var(--mut);max-width:720px;}
+    .chips{display:flex;gap:10px;flex-wrap:wrap;}
+    .chip{padding:8px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
+    .chip::before{content:"✷";color:var(--accent-hot);}
+    .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;}
     .btn{
-      padding:12px 18px; border-radius:16px; background:#ffffff14; backdrop-filter:blur(10px);
-      border:1px solid var(--stroke)
+      position:relative;
+      padding:14px 22px;border-radius:18px;font-weight:600;font-size:15px;
+      background:linear-gradient(120deg,rgba(118,153,255,.25),rgba(255,119,255,.2));
+      border:1px solid rgba(255,255,255,.18);
+      overflow:hidden;
+      transition:transform .2s ease, box-shadow .2s ease;
     }
-    .btn:hover{background:#ffffff22}
-    .section{padding:24px 20px}
-    .cards{display:grid; grid-template-columns:repeat(12,1fr); gap:16px}
+    .btn::after{
+      content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.2) 0, transparent 40%, transparent 60%, rgba(255,255,255,.25) 100%);
+      transform:translateX(-120%);
+      transition:transform .4s ease;
+    }
+    .btn:hover{transform:translateY(-3px);box-shadow:0 20px 40px rgba(15,22,62,.35);}
+    .btn:hover::after{transform:translateX(0);}    
+    .btn.secondary{background:rgba(9,12,36,.8);border:1px solid rgba(255,255,255,.12);}    
+
+    section{padding:0 clamp(16px,4vw,48px);}
+    .section-title{display:flex;align-items:center;gap:14px;margin-bottom:28px;font-size:24px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);}
+    .section-title::before{content:"";width:40px;height:2px;background:linear-gradient(90deg,var(--accent-hot),var(--accent));border-radius:999px;}
+
+    .grid{display:grid;gap:18px;}
+    @media(min-width:720px){
+      .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+      .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr));}
+    }
+
     .card{
-      grid-column:span 12; padding:20px; border-radius:20px; background:var(--card);
-      border:1px solid var(--stroke); transition:transform .15s ease, background .2s ease
+      position:relative;
+      border-radius:26px;
+      padding:28px;
+      background:linear-gradient(155deg,rgba(10,13,32,.92),rgba(18,22,48,.78));
+      border:1px solid rgba(255,255,255,.08);
+      overflow:hidden;
+      transition:transform .2s ease, border .3s ease;
+      min-height:210px;
     }
-    .card:hover{transform:translateY(-4px); background:#141726cc}
-    @media(min-width:760px){ .card{grid-column:span 6} }
-    @media(min-width:1024px){ .card{grid-column:span 4} }
-    .card h3{margin:0 0 6px 0; font-size:18px}
-    .card p{margin:0; color:var(--mut); font-size:14px}
-    .mono{font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
-    footer{border-top:1px solid var(--stroke); color:var(--mut); text-align:center; padding:30px}
-    @keyframes shine{to{background-position:200% 0}}
-    :where(a,button,[tabindex]):focus-visible{outline:3px solid var(--glass); outline-offset:2px}
+    .card::before{
+      content:"";position:absolute;inset:-40% -40% 60% 10%;background:radial-gradient(circle at 30% 30%,rgba(118,153,255,.45),transparent 65%);
+      opacity:0;transition:opacity .35s ease;
+    }
+    .card:hover{transform:translateY(-6px);border-color:rgba(118,153,255,.45);}
+    .card:hover::before{opacity:1;}
+    .card h3{margin:0 0 12px;font-size:20px;letter-spacing:-.01em;}
+    .card p{margin:0;color:var(--mut);line-height:1.6;font-size:15px;}
+    .mono{font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, "Menlo", monospace;font-size:13px;letter-spacing:-.01em;text-transform:uppercase;color:rgba(118,153,255,.8);}
+
+    .module{
+      position:relative;overflow:hidden;border-radius:26px;border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(140deg, rgba(8,12,32,.9), rgba(15,20,40,.7));
+      padding:32px;display:grid;gap:20px;align-items:start;
+    }
+    .module::after{
+      content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 10%, rgba(255,119,255,.25) 0, transparent 65%);
+      opacity:.7;mix-blend-mode:screen;pointer-events:none;
+    }
+    .module h3{margin:0;font-size:28px;letter-spacing:-.02em;}
+    .module p{margin:0;color:var(--mut);font-size:16px;line-height:1.7;max-width:620px;}
+    .module .mono{font-size:12px;opacity:.9;}
+
+    .timeline{display:grid;gap:26px;position:relative;}
+    .timeline::before{content:"";position:absolute;top:8px;bottom:0;left:12px;width:2px;background:linear-gradient(180deg,rgba(118,153,255,.5),rgba(255,119,255,.3));}
+    .t-item{position:relative;padding-left:48px;}
+    .t-item::before{content:"";position:absolute;left:4px;top:4px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,var(--accent-hot),var(--accent));box-shadow:0 0 24px rgba(118,153,255,.65);}
+    .t-item h4{margin:0;font-size:18px;}
+    .t-item p{margin:6px 0 0;color:var(--mut);font-size:14px;line-height:1.7;}
+
+    footer{padding:48px clamp(16px,4vw,48px) 64px;text-align:center;color:var(--mut);border-top:1px solid rgba(255,255,255,.05);}
+    footer a{text-decoration:underline dotted rgba(255,255,255,.35);text-decoration-thickness:1px;}
+
+    @keyframes shine{to{background-position:200% 0%;}}
+
+    @media(max-width:640px){
+      nav{flex-direction:column;align-items:flex-start;gap:16px;}
+      .links{width:100%;}
+      .links a{flex:1;text-align:center;}
+    }
   </style>
 </head>
 <body>
-  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="neon-grid" aria-hidden="true"></div>
 
-  <header class="nav">
+  <header>
     <div class="wrap">
-      <div class="brand">
-        <svg viewBox="0 0 128 128" role="img" aria-label="ORA logo">
-          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7aa8ff"/><stop offset="1" stop-color="#b388ff"/></linearGradient></defs>
-        <rect width="128" height="128" rx="26" fill="#0b0b10"></rect>
-        <path d="M28 86c0-28 18-44 36-44 18 0 36 16 36 44h-16c0-19-10-28-20-28s-20 9-20 28z" fill="url(#g)"></path>
-        </svg>
-        <span>YoneRai12</span>
-      </div>
+      <nav>
+        <a class="brand" href="#top" aria-label="ORA Hyperwave home">
+          <svg viewBox="0 0 128 128" role="img" aria-hidden="true">
+            <defs>
+              <linearGradient id="logo" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#6ef3ff" />
+                <stop offset="45%" stop-color="#7699ff" />
+                <stop offset="100%" stop-color="#ff77ff" />
+              </linearGradient>
+            </defs>
+            <rect width="128" height="128" rx="28" fill="#040616"></rect>
+            <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="url(#logo)"></path>
+          </svg>
+          ORA Hyperwave
+        </a>
+        <div class="links">
+          <a href="#stack">Stack</a>
+          <a href="#projects">Projects</a>
+          <a href="#lab">Lab</a>
+          <a href="#signal">Signal</a>
+        </div>
+      </nav>
     </div>
   </header>
 
-  <main>
+  <main id="top">
     <section class="hero">
-      <div>
-        <h1 class="title">Create Future With ORA</h1>
-        <p class="tag">RTX 5080 × LLM × SwiftUI × Blender で作る実験と記録</p>
-        <div class="cta">
-          <a class="btn" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a class="btn" href="https://x.com/YoneRai12" target="_blank" rel="noopener noreferrer">X</a>
-          <a class="btn" href="https://xs413759.xsrv.jp/" target="_blank" rel="noopener noreferrer">ORA WEB</a>
-          <a class="btn" href="https://discord.gg/MqWp8TFQwy" target="_blank" rel="noopener noreferrer">Discord</a>
-          <a class="btn" href="#works">Works</a>
-        </div>
+      <span class="mono">Future Forge / 2024 - ∞</span>
+      <h1>最高にクールな体験を合成する超流動クリエイティブラボ</h1>
+      <p>RTX 5080 クラスタと LLM、SwiftUI、Blender、VFX を融合させた ORA Hyperwave。プロトタイプと実験を高速で回し、未来都市のインターフェースを現実に着地させる、YoneRai12 のハイパーラボです。</p>
+      <div class="chips">
+        <span class="chip">Realtime Raytracing</span>
+        <span class="chip">LLM × MCP Fusion</span>
+        <span class="chip">SwiftUI Liquid</span>
+        <span class="chip">Procedural VFX</span>
+        <span class="chip">Zero-Delay Deployment</span>
+      </div>
+      <div class="cta">
+        <a class="btn" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="btn" href="https://x.com/YoneRai12" target="_blank" rel="noopener noreferrer">X / Hyperstream</a>
+        <a class="btn secondary" href="#signal">Join the Signal</a>
       </div>
     </section>
 
-    <section id="works" class="section wrap">
-      <h2 style="margin:0 0 12px 0">Works</h2>
-      <div class="cards">
-        <!-- 新規カード: ORA WEB -->
-        <a class="card" href="https://xs413759.xsrv.jp/" target="_blank" rel="noopener noreferrer">
-          <h3>ORA WEB</h3>
-          <p class="mono">xsrv.jp に設置した本サイト版へ移動</p>
-        </a>
+    <section id="stack">
+      <div class="section-title">Stack Highlights</div>
+      <div class="grid cols-3">
+        <article class="card">
+          <span class="mono">HARDWARE</span>
+          <h3>RTX 5080 / Cloud Hybrid</h3>
+          <p>ローカル GPU とクラウドノードを束ねたハイブリッドバンク。AI 推論をリアルタイムレンダリングとシームレスに連携。</p>
+        </article>
+        <article class="card">
+          <span class="mono">AI ENGINEERING</span>
+          <h3>MCP × ORA Agents</h3>
+          <p>Multi-Agent Control Protocol をベースに、ワークフロー自動化とコパイロット UI を構築。タスクはチャットと手勢で完遂。</p>
+        </article>
+        <article class="card">
+          <span class="mono">UI LAB</span>
+          <h3>Liquid SwiftUI</h3>
+          <p>SwiftUI で構築する液体的 UI コンポーネント。触感を感じさせるマテリアルと Dynamic Color を駆使した実装。</p>
+        </article>
+      </div>
+    </section>
 
-        <!-- 新規カード: Discord -->
-        <a class="card" href="https://discord.gg/MqWp8TFQwy" target="_blank" rel="noopener noreferrer">
-          <h3>Discord サーバー</h3>
-          <p class="mono">参加して開発ログと情報交換</p>
-        </a>
+    <section id="projects">
+      <div class="section-title">Flagship Projects</div>
+      <div class="grid cols-2">
+        <article class="module">
+          <span class="mono">ORA LLM STACK</span>
+          <h3>超高速ローカル LLM × MCP オーケストレーション</h3>
+          <p>RTX5080 の演算をフルに引き出すローカル推論環境。MCP プラグインで各種ツールを束ね、秒間で反応する Copilot を実現。</p>
+          <a class="btn" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">View Repo</a>
+        </article>
+        <article class="module">
+          <span class="mono">ORA MOBILE</span>
+          <h3>Liquid Glass UI を備えた SwiftUI クライアント</h3>
+          <p>触れると揺らぎ、パララックスするインターフェース。Vision Pro / iOS / macOS を跨いで連携するマルチデバイス設計。</p>
+          <a class="btn" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">View Repo</a>
+        </article>
+        <article class="module">
+          <span class="mono">ORA WEB</span>
+          <h3>WebGL × VFX で描く都市型ポータル</h3>
+          <p>Blender / VFX で生成したアセットと WebGL を組み合わせたイマーシブサイト。マイクロインタラクションとフラクタルな演出が特徴。</p>
+          <a class="btn" href="https://xs413759.xsrv.jp/" target="_blank" rel="noopener noreferrer">Launch Portal</a>
+        </article>
+        <article class="module">
+          <span class="mono">COMMUNITY SIGNAL</span>
+          <h3>Discord で共有する開発ログとドキュメント</h3>
+          <p>日々のアップデート、エフェクトのプリセット、AI モデルチューニングログを公開。リアルタイムでフィードバックを受け取る拠点。</p>
+          <a class="btn" href="https://discord.gg/MqWp8TFQwy" target="_blank" rel="noopener noreferrer">Enter Discord</a>
+        </article>
+      </div>
+    </section>
 
-        <!-- 既存カード群 -->
-        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">
-          <h3>ORA LLM Stack</h3>
-          <p class="mono">RTX5080 ローカル推論 MCP 連携 Hybrid</p>
-        </a>
-        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">
-          <h3>ORA Mobile</h3>
-          <p class="mono">SwiftUI Liquid-Glass UI Chat + Tools</p>
-        </a>
-        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">
-          <h3>Blender / VFX</h3>
-          <p class="mono">Cycles / Eevee 作品やノードのプリセット</p>
-        </a>
+    <section id="lab">
+      <div class="section-title">Lab Experiments</div>
+      <div class="grid cols-3">
+        <article class="card">
+          <span class="mono">VFX NODES</span>
+          <h3>Procedural Burst Library</h3>
+          <p>ノードを組み合わせて生成する爆発・霧・プラズマのプリセット集。シェーダー切り替えで演出を瞬時に変更。</p>
+        </article>
+        <article class="card">
+          <span class="mono">REALITY LAYER</span>
+          <h3>Spatial UI for Vision Pro</h3>
+          <p>空間コンピューティング向けの UI モーションガイドラインを構築。ニュートンリングのような光が浮かぶホログラム体験。</p>
+        </article>
+        <article class="card">
+          <span class="mono">HYPER AUTOMATION</span>
+          <h3>Agentic Workflow</h3>
+          <p>LLM によるオートメーションフローを構築し、3D アセット生成からコーディングまでを連結。開発サイクルを極限まで圧縮。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="signal">
+      <div class="section-title">Signal Log</div>
+      <div class="grid">
+        <article class="card">
+          <h3>ミッション</h3>
+          <p>Hyperwave の目的は、ユーザーに「未来を先取りして触れている」感覚を届けること。ビジュアルと技術を融合し、実験的な体験を即座に公開。</p>
+        </article>
+        <article class="card">
+          <h3>アクセスチャネル</h3>
+          <p>GitHub, Discord, X で随時アップデート。最新のレンダリング結果や AI ツールチェーンを Hyperstream と呼ばれるライブフィードで配信。</p>
+        </article>
+      </div>
+      <div class="timeline" aria-label="Latest signals">
+        <div class="t-item">
+          <h4>2024.06 · Liquid SwiftUI Beta</h4>
+          <p>物理ベースのマテリアルシステムを実装。SwiftUI の Custom Layout と Metal Shader Graph を統合し、ライブデータの視覚化を実現。</p>
+        </div>
+        <div class="t-item">
+          <h4>2024.05 · MCP Hyper Agents</h4>
+          <p>LLM エージェントが VFX ノードと Blender を操作。自動でシーンを生成し、Web 用に最適化されたアセットをエクスポート。</p>
+        </div>
+        <div class="t-item">
+          <h4>2024.04 · Hyperstream Infra</h4>
+          <p>低遅延なストリーミング基盤を構築。GPU レンダリングの過程をライブで共有し、コミュニティのフィードバックを即座に反映。</p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    © <span id="y"></span> YoneRai12 · Built on GitHub Pages
+    © <span id="year"></span> YoneRai12 · Hyperwave on GitHub Pages · <a href="https://xs413759.xsrv.jp/" target="_blank" rel="noopener noreferrer">Enter ORA</a>
   </footer>
 
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-    const cards = document.querySelectorAll('.card');
-    document.addEventListener('pointermove', e=>{
-      const r = 20;
-      cards.forEach(el=>{
-        const b = el.getBoundingClientRect();
-        const dx = (e.clientX - (b.left + b.width/2)) / b.width;
-        const dy = (e.clientY - (b.top + b.height/2)) / b.height;
-        el.style.transform = `translateY(${(-4 + dy*r*0.2).toFixed(2)}px) rotateX(${(-dy*r*0.2).toFixed(2)}deg) rotateY(${(dx*r*0.2).toFixed(2)}deg)`;
-      });
-    });
-    document.addEventListener('pointerleave', ()=>cards.forEach(el=>el.style.transform=''));
+    const yearEl = document.getElementById('year');
+    if(yearEl){
+      yearEl.textContent = new Date().getFullYear();
+    }
+
+    const hero = document.querySelector('.hero h1');
+    const phrases = [
+      hero.textContent,
+      '最高速のプロトタイプ',
+      '未来都市 UI',
+      'LLM × MCP Workflow',
+      'Procedural VFX',
+      '超感覚インターフェース'
+    ];
+    let index = 0;
+    setInterval(()=>{
+      index = (index + 1) % phrases.length;
+      hero.style.opacity = 0;
+      setTimeout(()=>{
+        hero.textContent = phrases[index];
+        hero.style.opacity = 1;
+      }, 240);
+    }, 4200);
   </script>
 </body>
 </html>
