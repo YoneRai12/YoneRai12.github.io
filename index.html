@@ -1,23 +1,157 @@
 <!doctype html>
 <html lang="ja">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>YoneRai12</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet">
-<style>
-  :root { color-scheme: dark light }
-  body { margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif; }
-  .wrap { min-height:100svh; display:grid; place-items:center; background: radial-gradient(80% 60% at 50% 0%, #111 0, #000 60%); color:#eaeaea }
-  .card { text-align:center; padding:6rem 2rem }
-  h1 { font-size: clamp(36px, 8vw, 72px); letter-spacing:-.02em; margin:0 }
-  p { opacity:.75; font-size: clamp(14px, 2.4vw, 18px) }
-  a.btn { display:inline-block; margin-top:24px; padding:12px 18px; border-radius:14px; background:#fff1; backdrop-filter: blur(8px) }
-</style>
-<div class="wrap">
-  <main class="card">
-    <h1>YoneRai12</h1>
-    <p>Next.js と ORA の実験場</p>
-    <a class="btn" href="https://github.com/YoneRai12">GitHub を見る</a>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>YoneRai12 | ORA / VIBE-STACK</title>
+  <meta name="description" content="YoneRai12 の実験場 ORA / VIBE-STACK / LLM / VFX / Web">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#0b0b10">
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="YoneRai12">
+  <meta property="og:description" content="ORA / VIBE-STACK / LLM / VFX / Web">
+  <meta property="og:url" content="https://yonerai12.github.io/">
+  <meta property="og:image" content="https://yonerai12.github.io/og.png">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="YoneRai12">
+  <meta name="twitter:description" content="ORA / VIBE-STACK / LLM / VFX / Web">
+  <meta name="twitter:image" content="https://yonerai12.github.io/og.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Favicon (SVG データURIで軽量) -->
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="%2306f" /><stop offset="1" stop-color="%23a0f" /></linearGradient></defs><rect width="128" height="128" rx="28" fill="%230b0b10"/><path d="M28 86c0-28 18-44 36-44 18 0 36 16 36 44h-16c0-19-10-28-20-28s-20 9-20 28z" fill="url(%23g)"/></svg>'>
+  <style>
+    :root{
+      --bg:#0b0b10; --fg:#e8e8ea; --mut:#a9acb3; --card:#11131a80; --stroke:#ffffff12;
+      --grad1: conic-gradient(from 180deg at 50% -10%, #1b1f30, #0b0b10 40%, #180f24 70%, #1b1f30);
+      --glass: color-mix(in oklab, white 12%, transparent); /* focus ring */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--fg); background:radial-gradient(80% 50% at 50% -10%, #1a1f2e 0, transparent 60%), var(--grad1), var(--bg);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    a{color:inherit; text-decoration:none}
+    .grid-bg{
+      position:fixed; inset:0; pointer-events:none;
+      background:
+        linear-gradient(to right, var(--stroke) 1px, transparent 1px) 0 0/56px 56px,
+        linear-gradient(to bottom, var(--stroke) 1px, transparent 1px) 0 0/56px 56px;
+      mask: radial-gradient(100% 60% at 50% 0%, #000 40%, transparent 80%);
+    }
+    .nav{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px); background:rgba(12,14,20,.45);
+      border-bottom:1px solid var(--stroke);
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:18px 20px}
+    .brand{display:flex; gap:12px; align-items:center; font-weight:900; letter-spacing:-.02em}
+    .brand svg{width:28px; height:28px; flex:none}
+    .hero{min-height:70svh; display:grid; place-items:center; text-align:center; padding:6rem 1rem}
+    .title{
+      font-size:clamp(40px, 8vw, 92px); line-height:1; margin:0;
+      background:linear-gradient(90deg,#7aa8ff, #b388ff 40%, #8ee7ff 70%, #7aa8ff) 0/200% 100%;
+      -webkit-background-clip:text; background-clip:text; color:transparent; animation:shine 9s linear infinite;
+      word-break:keep-all
+    }
+    .tag{margin-top:14px; color:var(--mut); font-size:clamp(14px,2.3vw,18px)}
+    .cta{margin-top:28px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+    .btn{
+      padding:12px 18px; border-radius:16px; background:#ffffff14; backdrop-filter:blur(10px);
+      border:1px solid var(--stroke)
+    }
+    .btn:hover{background:#ffffff22}
+    .section{padding:24px 20px}
+    .cards{display:grid; grid-template-columns:repeat(12,1fr); gap:16px}
+    .card{
+      grid-column:span 12; padding:20px; border-radius:20px; background:var(--card);
+      border:1px solid var(--stroke); transition:transform .15s ease, background .2s ease
+    }
+    .card:hover{transform:translateY(-4px); background:#141726cc}
+    @media(min-width:760px){ .card{grid-column:span 6} }
+    @media(min-width:1024px){ .card{grid-column:span 4} }
+    .card h3{margin:0 0 6px 0; font-size:18px}
+    .card p{margin:0; color:var(--mut); font-size:14px}
+    .mono{font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+    footer{border-top:1px solid var(--stroke); color:var(--mut); text-align:center; padding:30px}
+    @keyframes shine{to{background-position:200% 0}}
+    /* focus */
+    :where(a,button,[tabindex]):focus-visible{outline:3px solid var(--glass); outline-offset:2px}
+  </style>
+</head>
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="wrap">
+      <div class="brand">
+        <svg viewBox="0 0 128 128" role="img" aria-label="ORA logo">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7aa8ff"/><stop offset="1" stop-color="#b388ff"/></linearGradient></defs>
+          <rect width="128" height="128" rx="26" fill="#0b0b10"></rect>
+          <path d="M28 86c0-28 18-44 36-44 18 0 36 16 36 44h-16c0-19-10-28-20-28s-20 9-20 28z" fill="url(#g)"></path>
+        </svg>
+        <span>YoneRai12</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1 class="title">Create Future With ORA</h1>
+        <p class="tag">RTX 5080 × LLM × SwiftUI × Blender で作る実験と記録</p>
+        <div class="cta">
+          <a class="btn" href="https://github.com/YoneRai12" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://x.com/YoneRai12" target="_blank" rel="noopener">X</a>
+          <a class="btn" href="#works">Works</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="works" class="section wrap">
+      <h2 style="margin:0 0 12px 0">Works</h2>
+      <div class="cards">
+        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener">
+          <h3>ORA LLM Stack</h3>
+          <p class="mono">RTX5080 ローカル推論 MCP 連携 Hybrid</p>
+        </a>
+        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener">
+          <h3>ORA Mobile</h3>
+          <p class="mono">SwiftUI Liquid-Glass UI Chat + Tools</p>
+        </a>
+        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener">
+          <h3>Blender / VFX</h3>
+          <p class="mono">Cycles / Eevee 作品やノードのプリセット</p>
+        </a>
+      </div>
+    </section>
   </main>
-</div>
+
+  <footer>
+    © <span id="y"></span> YoneRai12 · Built on GitHub Pages
+  </footer>
+
+  <script>
+    // 年号とカードのミニ・パララックス
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const cards = document.querySelectorAll('.card');
+    document.addEventListener('pointermove', e=>{
+      const r = 20;
+      cards.forEach(el=>{
+        const b = el.getBoundingClientRect();
+        const dx = (e.clientX - (b.left + b.width/2)) / b.width;
+        const dy = (e.clientY - (b.top + b.height/2)) / b.height;
+        el.style.transform = `translateY(${(-4 + dy*r*0.2).toFixed(2)}px) rotateX(${(-dy*r*0.2).toFixed(2)}deg) rotateY(${(dx*r*0.2).toFixed(2)}deg)`;
+      });
+    });
+    document.addEventListener('pointerleave', ()=>cards.forEach(el=>el.style.transform=''));
+  </script>
+</body>
+</html>
