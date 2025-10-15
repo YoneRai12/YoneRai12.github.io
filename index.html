@@ -29,7 +29,7 @@
     :root{
       --bg:#0b0b10; --fg:#e8e8ea; --mut:#a9acb3; --card:#11131a80; --stroke:#ffffff12;
       --grad1: conic-gradient(from 180deg at 50% -10%, #1b1f30, #0b0b10 40%, #180f24 70%, #1b1f30);
-      --glass: color-mix(in oklab, white 12%, transparent); /* focus ring */
+      --glass: color-mix(in oklab, white 12%, transparent);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -82,7 +82,6 @@
     .mono{font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
     footer{border-top:1px solid var(--stroke); color:var(--mut); text-align:center; padding:30px}
     @keyframes shine{to{background-position:200% 0}}
-    /* focus */
     :where(a,button,[tabindex]):focus-visible{outline:3px solid var(--glass); outline-offset:2px}
   </style>
 </head>
@@ -94,8 +93,8 @@
       <div class="brand">
         <svg viewBox="0 0 128 128" role="img" aria-label="ORA logo">
           <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7aa8ff"/><stop offset="1" stop-color="#b388ff"/></linearGradient></defs>
-          <rect width="128" height="128" rx="26" fill="#0b0b10"></rect>
-          <path d="M28 86c0-28 18-44 36-44 18 0 36 16 36 44h-16c0-19-10-28-20-28s-20 9-20 28z" fill="url(#g)"></path>
+        <rect width="128" height="128" rx="26" fill="#0b0b10"></rect>
+        <path d="M28 86c0-28 18-44 36-44 18 0 36 16 36 44h-16c0-19-10-28-20-28s-20 9-20 28z" fill="url(#g)"></path>
         </svg>
         <span>YoneRai12</span>
       </div>
@@ -108,8 +107,10 @@
         <h1 class="title">Create Future With ORA</h1>
         <p class="tag">RTX 5080 × LLM × SwiftUI × Blender で作る実験と記録</p>
         <div class="cta">
-          <a class="btn" href="https://github.com/YoneRai12" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn" href="https://x.com/YoneRai12" target="_blank" rel="noopener">X</a>
+          <a class="btn" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="btn" href="https://x.com/YoneRai12" target="_blank" rel="noopener noreferrer">X</a>
+          <a class="btn" href="https://xs413759.xsrv.jp/" target="_blank" rel="noopener noreferrer">ORA WEB</a>
+          <a class="btn" href="https://discord.gg/MqWp8TFQwy" target="_blank" rel="noopener noreferrer">Discord</a>
           <a class="btn" href="#works">Works</a>
         </div>
       </div>
@@ -118,15 +119,28 @@
     <section id="works" class="section wrap">
       <h2 style="margin:0 0 12px 0">Works</h2>
       <div class="cards">
-        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener">
+        <!-- 新規カード: ORA WEB -->
+        <a class="card" href="https://xs413759.xsrv.jp/" target="_blank" rel="noopener noreferrer">
+          <h3>ORA WEB</h3>
+          <p class="mono">xsrv.jp に設置した本サイト版へ移動</p>
+        </a>
+
+        <!-- 新規カード: Discord -->
+        <a class="card" href="https://discord.gg/MqWp8TFQwy" target="_blank" rel="noopener noreferrer">
+          <h3>Discord サーバー</h3>
+          <p class="mono">参加して開発ログと情報交換</p>
+        </a>
+
+        <!-- 既存カード群 -->
+        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">
           <h3>ORA LLM Stack</h3>
           <p class="mono">RTX5080 ローカル推論 MCP 連携 Hybrid</p>
         </a>
-        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener">
+        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">
           <h3>ORA Mobile</h3>
           <p class="mono">SwiftUI Liquid-Glass UI Chat + Tools</p>
         </a>
-        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener">
+        <a class="card" href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">
           <h3>Blender / VFX</h3>
           <p class="mono">Cycles / Eevee 作品やノードのプリセット</p>
         </a>
@@ -139,7 +153,6 @@
   </footer>
 
   <script>
-    // 年号とカードのミニ・パララックス
     document.getElementById('y').textContent = new Date().getFullYear();
     const cards = document.querySelectorAll('.card');
     document.addEventListener('pointermove', e=>{
