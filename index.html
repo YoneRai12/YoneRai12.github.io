@@ -2,9 +2,9 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ORA Hyperwave</title>
-  <meta name="description" content="YoneRai12 が描く最高にクールな未来都市型ポートフォリオ">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>YoneRai12 | ORA Hyperwave</title>
+  <meta name="description" content="YoneRai12 | ORA Hyperwave — Realtime AI × VFX × SwiftUI 未来都市のUIを今日に着陸させるプロトタイプラボ">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f6ff">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#050611">
@@ -20,23 +20,22 @@
       --line:#ffffff1c;
       --accent:#7699ff;
       --accent-hot:#ff77ff;
-      --cool:rgba(118,153,255,.24);
-      --hot:rgba(255,119,255,.28);
       --glass:color-mix(in srgb, rgba(41,52,102,.85) 70%, transparent);
       --noise:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="60" height="60" filter="url(%23n)" opacity="0.28"/%3E%3C/svg%3E');
+      /* Spotlight */
       --spot-size:clamp(180px,22vw,320px);
       --spot-strength:rgba(118,153,255,0.35);
       --spot-strength-hot:rgba(255,119,255,0.35);
     }
     *{box-sizing:border-box;}
+    html{font-size:clamp(14px,3.6vw,16px);}
     html,body{height:100%;}
     body{
       margin:0;
       font-family:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
       background:
-        radial-gradient(72% 80% at 16% 12%, rgba(118,153,255,.35) 0%, transparent 65%),
-        radial-gradient(60% 70% at 82% 10%, rgba(255,119,255,.32) 0%, transparent 70%),
-        radial-gradient(78% 85% at 70% 78%, rgba(110,243,255,.26) 0%, transparent 78%),
+        radial-gradient(120% 120% at 82% 10%, #151b4a 0%, transparent 55%),
+        radial-gradient(95% 110% at 15% -10%, #21132e 0%, transparent 60%),
         var(--bg);
       color:var(--fg);
       overflow-x:hidden;
@@ -48,11 +47,12 @@
       content:"";
       position:fixed;
       inset:-40vmax;
-      background:radial-gradient(circle at 20% 30%, rgba(118,153,255,.35) 0, transparent 55%),
-                radial-gradient(circle at 80% 10%, rgba(255,119,255,.28) 0, transparent 52%),
-                radial-gradient(circle at 70% 80%, rgba(110,243,255,.25) 0, transparent 48%);
+      background:
+        radial-gradient(circle at 20% 30%, rgba(118,153,255,.45) 0, transparent 55%),
+        radial-gradient(circle at 80% 10%, rgba(255,119,255,.35) 0, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(110,243,255,.25) 0, transparent 45%);
       filter:blur(120px);
-      opacity:.85;
+      opacity:.8;
       animation:slow-orbit 30s linear infinite;
       z-index:-3;
     }
@@ -62,7 +62,7 @@
       inset:0;
       background:var(--noise);
       mix-blend-mode:soft-light;
-      opacity:0.25;
+      opacity:.25;
       z-index:-1;
       pointer-events:none;
     }
@@ -95,91 +95,76 @@
     .links a{padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:14px;transition:background .2s ease,transform .2s ease;}
     .links a:hover{background:rgba(255,255,255,.12);transform:translateY(-2px);}
 
-    main{display:grid;gap:4.5rem;animation:fade-in 1.2s ease;}
-    .hero{padding:clamp(4rem,12vw,9rem) clamp(16px,4vw,48px) 0;display:grid;gap:1.2rem;position:relative;overflow:hidden;}
-    .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 10% 20%, rgba(255,255,255,.08) 0, transparent 55%),radial-gradient(80% 80% at 70% 30%, rgba(118,153,255,.12) 0, transparent 70%);mix-blend-mode:screen;filter:blur(0);animation:hero-orbit 24s ease-in-out infinite;}
-    .hero .hero-label{font-family:"JetBrains Mono", monospace;font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--mut);}
-    .hero h1{margin:0;font-size:clamp(46px,8.2vw,92px);line-height:1;letter-spacing:-.03em;background:linear-gradient(110deg,var(--accent-hot),var(--accent) 55%,#6ef3ff 90%);-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 12s linear infinite;}
-    .hero .tagline{margin:0;font-size:clamp(18px,2.3vw,24px);color:#d8e0ff;font-weight:600;}
-    .hero .profile-short{margin:0;font-size:clamp(16px,2.1vw,20px);color:var(--mut);max-width:760px;line-height:1.7;}
-    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:.6rem;}
+    main{display:grid;gap:5rem;animation:fade-in 1.2s ease;}
+    .hero{
+      padding:clamp(4rem,12vw,9rem) clamp(16px,4vw,48px) 0;
+      display:grid;gap:1.8rem;position:relative;overflow:hidden;
+      min-block-size:52svh; /* モバイル初期表示の“倍率感”を再現 */
+    }
+    .hero::before{
+      content:"";
+      position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(120% 120% at 10% 20%, rgba(255,255,255,.08) 0, transparent 55%),
+        radial-gradient(80% 80% at 70% 30%, rgba(118,153,255,.12) 0, transparent 70%);
+      mix-blend-mode:screen;animation:hero-orbit 24s ease-in-out infinite;
+    }
+    .hero .display{position:relative;z-index:1;font-size:15px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.58);}
+    .hero h1{
+      margin:0;font-size:clamp(46px,8.6vw,92px);line-height:1;letter-spacing:-.03em;position:relative;z-index:1;
+      background:linear-gradient(110deg,var(--accent-hot),var(--accent) 50%,#6ef3ff 85%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 12s linear infinite;transition:opacity .4s ease;
+    }
+    .hero p{margin:0;position:relative;z-index:1;}
+    .hero .lead{font-size:clamp(18px,2.3vw,22px);color:var(--mut);max-width:720px;}
+    .profile-long{font-size:clamp(15px,2vw,18px);color:rgba(223,229,255,.72);max-width:860px;line-height:1.7;}
+
+    .chips{display:flex;gap:10px;flex-wrap:wrap;}
     .chip{padding:8px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
     .chip::before{content:"✷";color:var(--accent-hot);}
 
-    .cta-area{padding:0 clamp(16px,4vw,48px);display:grid;gap:2.4rem;}
-    .cta-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
-    .cta-card{
-      position:relative;
-      border-radius:30px;
-      padding:28px;
-      display:flex;
-      gap:18px;
-      align-items:center;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.08);
-      background:linear-gradient(140deg, rgba(8,12,32,.88), rgba(18,22,48,.74));
-      transition:transform .5s cubic-bezier(.21,.98,.6,.99), border .4s ease;
-      min-height:160px;
-      isolation:isolate;
-      --spot-x:50%;
-      --spot-y:50%;
-      --spot-opacity:0;
+    .cta-feature-grid{display:grid;gap:16px;margin-top:8px;position:relative;z-index:1;}
+    @media(min-width:720px){.cta-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+    .cta-feature{
+      position:relative;display:grid;gap:12px;padding:26px;border-radius:28px;min-height:160px;overflow:hidden;
+      border:1px solid rgba(118,153,255,.35);
+      background:linear-gradient(140deg,rgba(10,18,46,.88),rgba(16,24,58,.6));
+      transition:transform .45s cubic-bezier(.21,.98,.6,.99),border .4s ease;--spot-x:50%;--spot-y:50%;--spot-opacity:0;isolation:isolate;
     }
-    .cta-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 25% 20%, rgba(118,153,255,.22), transparent 65%);opacity:.7;mix-blend-mode:screen;transition:opacity .4s ease;z-index:0;}
-    .cta-card.hot::before{background:radial-gradient(circle at 75% 25%, rgba(255,119,255,.32), transparent 70%);}
-    .cta-card::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;background:radial-gradient(var(--spot-size) circle at var(--spot-x,50%) var(--spot-y,50%), rgba(255,255,255,.22), transparent 70%);opacity:var(--spot-opacity,0);transition:opacity .4s ease;mix-blend-mode:screen;z-index:1;}
-    .cta-card:hover{transform:translate3d(0,-12px,0);border-color:rgba(118,153,255,.38);}
-    .cta-card.hot:hover{border-color:rgba(255,119,255,.42);}
-    .cta-media{position:relative;width:64px;height:64px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;z-index:2;}
-    .cta-media svg{width:40px;height:40px;filter:drop-shadow(0 0 22px rgba(118,153,255,.4));}
-    .cta-content{z-index:2;display:grid;gap:8px;}
-    .cta-content span{font-family:"JetBrains Mono", monospace;font-size:12px;letter-spacing:.24em;color:var(--mut);text-transform:uppercase;}
-    .cta-content strong{font-size:22px;letter-spacing:-.01em;}
-    .cta-content p{margin:0;color:var(--mut);font-size:14px;line-height:1.6;max-width:360px;}
+    .cta-feature::before{content:"";position:absolute;inset:0;background:radial-gradient(var(--spot-size) circle at var(--spot-x) var(--spot-y), rgba(118,153,255,.32), transparent 70%);opacity:var(--spot-opacity);transition:opacity .35s ease;mix-blend-mode:screen;z-index:1;}
+    .cta-feature.hot{border-color:rgba(255,119,255,.55);background:linear-gradient(150deg,rgba(38,10,42,.88),rgba(12,16,42,.6));}
+    .cta-feature:hover{transform:translate3d(0,-10px,0);--spot-opacity:1;}
+    .cta-feature svg{width:44px;height:44px;filter:drop-shadow(0 0 22px rgba(118,153,255,.35));}
+    .cta-feature.hot svg{filter:drop-shadow(0 0 24px rgba(255,119,255,.4));}
+    .cta-body{position:relative;z-index:2;display:grid;gap:6px;align-content:start;}
+    .cta-body span{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.62);}
+    .cta-body h3{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em;}
+    .cta-body p{margin:0;font-size:14px;color:rgba(221,226,255,.68);}
 
-    .button-row{display:flex;flex-wrap:wrap;gap:14px;}
+    .cta-buttons{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;position:relative;z-index:1;}
     .btn{
-      position:relative;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:14px 26px;
-      border-radius:22px;
-      font-weight:600;
-      font-size:15px;
-      color:#ffffff;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      overflow:hidden;
-      transition:transform .35s cubic-bezier(.21,.98,.6,.99), box-shadow .35s ease, border .35s ease;
-      --spot-x:50%;
-      --spot-y:50%;
-      --spot-opacity:0;
-      isolation:isolate;
+      position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;
+      padding:14px 24px;border-radius:22px;font-weight:600;font-size:15px;
+      background:linear-gradient(120deg,rgba(118,153,255,.24),rgba(110,243,255,.14));
+      border:1px solid rgba(118,153,255,.45);
+      overflow:hidden;transition:transform .35s cubic-bezier(.21,.98,.6,.99), box-shadow .35s ease;
+      --spot-x:50%;--spot-y:50%;--spot-opacity:0;isolation:isolate;color:inherit;text-decoration:none;
     }
-    .btn::before{
-      content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;
-      background:radial-gradient(calc(var(--spot-size)*.55) circle at var(--spot-x) var(--spot-y), rgba(255,255,255,.35), transparent 70%);
-      opacity:var(--spot-opacity);
-      transition:opacity .3s ease;
-      mix-blend-mode:screen;
-      z-index:1;
-    }
-    .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.18) 0, transparent 40%, transparent 60%, rgba(255,255,255,.25) 100%);transform:translateX(-120%);transition:transform .4s ease;}
-    .btn:hover{transform:translate3d(0,-5px,0);box-shadow:0 22px 44px rgba(15,22,62,.35);--spot-opacity:1;border-color:rgba(255,255,255,.32);}
+    .btn::before{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;background:radial-gradient(calc(var(--spot-size)*.55) circle at var(--spot-x) var(--spot-y), rgba(118,153,255,.38), transparent 72%);opacity:var(--spot-opacity);transition:opacity .3s ease;mix-blend-mode:screen;z-index:1;}
+    .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.2) 0, transparent 40%, transparent 60%, rgba(255,255,255,.25) 100%);transform:translateX(-120%);transition:transform .4s ease;}
+    .btn:hover{transform:translate3d(0,-5px,0);box-shadow:0 22px 44px rgba(15,22,62,.35);--spot-opacity:1;}
     .btn:hover::after{transform:translateX(0);}
-    .btn.hot{border-color:#ff77ff80;background:linear-gradient(120deg,rgba(255,119,255,.35),rgba(255,119,255,.12));}
-    .btn.cool{border-color:#7699ff80;background:linear-gradient(120deg,rgba(118,153,255,.28),rgba(110,243,255,.14));}
+    .btn.hot{background:linear-gradient(120deg,rgba(255,119,255,.32),rgba(118,153,255,.24));border-color:rgba(255,119,255,.58);}
+    .ora-icon{width:18px;height:18px;flex:none;filter:drop-shadow(0 0 12px rgba(118,153,255,.45));}
+    .btn.hot .ora-icon{filter:drop-shadow(0 0 14px rgba(255,119,255,.5));}
 
-    .anchor-links{display:flex;flex-wrap:wrap;gap:18px;font-family:"JetBrains Mono", monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--mut);}
-    .anchor-links a{padding:6px 0;border-bottom:1px solid transparent;transition:border .2s ease,color .2s ease;}
-    .anchor-links a:hover{color:#ffffff;border-color:rgba(255,255,255,.32);}
+    .headline-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:14px;position:relative;z-index:1;}
+    .headline-links a{padding:8px 14px;border-radius:14px;background:rgba(8,12,36,.6);border:1px solid rgba(118,153,255,.28);transition:transform .25s ease, border .3s ease;}
+    .headline-links a:hover{transform:translateY(-4px);border-color:rgba(255,119,255,.55);}
 
-    section{padding:0 clamp(16px,4vw,48px);}    
+    section{padding:0 clamp(16px,4vw,48px);}
     .section-title{display:flex;align-items:center;gap:14px;margin-bottom:28px;font-size:24px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);}
     .section-title::before{content:"";width:40px;height:2px;background:linear-gradient(90deg,var(--accent-hot),var(--accent));border-radius:999px;}
-
-    .profile-section .module{padding:36px;}
 
     .grid{display:grid;gap:18px;}
     @media(min-width:720px){
@@ -188,19 +173,11 @@
     }
 
     .card{
-      position:relative;
-      border-radius:26px;
-      padding:28px;
+      position:relative;border-radius:26px;padding:28px;
       background:linear-gradient(155deg,rgba(10,13,32,.92),rgba(18,22,48,.78));
-      border:1px solid rgba(255,255,255,.08);
-      overflow:hidden;
-      transition:transform .5s cubic-bezier(.21,.98,.6,.99), border .4s ease;
-      min-height:200px;
-      will-change:transform;
-      --spot-x:50%;
-      --spot-y:50%;
-      --spot-opacity:0;
-      isolation:isolate;
+      border:1px solid rgba(255,255,255,.08);overflow:hidden;
+      transition:transform .5s cubic-bezier(.21,.98,.6,.99), border .4s ease;min-height:210px;will-change:transform;
+      --spot-x:50%;--spot-y:50%;--spot-opacity:0;isolation:isolate;
     }
     .card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(118,153,255,.18),transparent 65%);opacity:.5;transition:opacity .4s ease;z-index:0;}
     .card::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;background:radial-gradient(var(--spot-size) circle at var(--spot-x) var(--spot-y), var(--spot-strength), transparent 70%), radial-gradient(calc(var(--spot-size)*.8) circle at var(--spot-x) var(--spot-y), var(--spot-strength-hot), transparent 75%);opacity:var(--spot-opacity);transition:opacity .4s ease;mix-blend-mode:screen;z-index:1;}
@@ -210,21 +187,15 @@
     .module{
       position:relative;overflow:hidden;border-radius:26px;border:1px solid rgba(255,255,255,.08);
       background:linear-gradient(140deg, rgba(8,12,32,.9), rgba(15,20,40,.7));
-      padding:32px;display:grid;gap:20px;align-items:start;
-      --spot-x:50%;
-      --spot-y:50%;
-      --spot-opacity:0;
-      isolation:isolate;
-      transition:transform .6s cubic-bezier(.21,.98,.6,.99), border .4s ease;
-      will-change:transform;
+      padding:32px;display:grid;gap:20px;align-items:start;--spot-x:50%;--spot-y:50%;--spot-opacity:0;isolation:isolate;
+      transition:transform .6s cubic-bezier(.21,.98,.6,.99), border .4s ease;will-change:transform;
     }
     .module::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 10%, rgba(255,119,255,.25) 0, transparent 65%);opacity:.7;mix-blend-mode:screen;pointer-events:none;z-index:0;}
     .module::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;background:radial-gradient(var(--spot-size) circle at var(--spot-x) var(--spot-y), rgba(110,243,255,.35), transparent 70%), radial-gradient(calc(var(--spot-size)*.7) circle at var(--spot-x) var(--spot-y), rgba(255,255,255,.2), transparent 80%);opacity:var(--spot-opacity);transition:opacity .4s ease;mix-blend-mode:screen;z-index:1;}
     .module:hover{transform:translate3d(0,-14px,0);border-color:rgba(118,153,255,.45);--spot-opacity:1;}
-
     .module h3{margin:0;font-size:28px;letter-spacing:-.02em;}
-    .module p{margin:0;color:var(--mut);font-size:16px;line-height:1.7;max-width:720px;}
-    .module .mono{font-size:12px;opacity:.9;letter-spacing:.2em;font-family:"JetBrains Mono", monospace;color:var(--mut);text-transform:uppercase;}
+    .module p{margin:0;color:var(--mut);font-size:16px;line-height:1.7;max-width:620px;}
+    .module .mono{font-size:12px;opacity:.9;}
 
     .timeline{display:grid;gap:26px;position:relative;}
     .timeline::before{content:"";position:absolute;top:8px;bottom:0;left:12px;width:2px;background:linear-gradient(180deg,rgba(118,153,255,.5),rgba(255,119,255,.3));}
@@ -247,12 +218,10 @@
     @media (prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
     }
-
     @media(max-width:640px){
       nav{flex-direction:column;align-items:flex-start;gap:16px;}
       .links{width:100%;}
       .links a{flex:1;text-align:center;}
-      .cta-grid{grid-template-columns:1fr;}
     }
   </style>
 </head>
@@ -274,14 +243,13 @@
             <rect width="128" height="128" rx="28" fill="#040616"></rect>
             <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="url(#logo)"></path>
           </svg>
-          ORA Hyperwave
+          YoneRai12 | ORA Hyperwave
         </a>
         <div class="links">
-          <a href="#profile">Profile</a>
-          <a href="#llm">LLM Stack</a>
-          <a href="#swiftui">SwiftUI Lab</a>
-          <a href="#vfx">VFX Library</a>
-          <a href="#signal">Signal</a>
+          <a href="#stack">ORA LLM Stack</a>
+          <a href="#liquid">Liquid SwiftUI Lab</a>
+          <a href="#vfx">VFX Nodes Library</a>
+          <a href="#ops">Operations</a>
         </div>
       </nav>
     </div>
@@ -289,240 +257,241 @@
 
   <main id="top">
     <section class="hero">
-      <span class="hero-label">YoneRai12 | ORA Hyperwave</span>
-      <h1>Realtime AI × VFX × SwiftUI</h1>
-      <p class="tagline">未来都市のUIを今日に着陸させる</p>
-      <p class="profile-short">RTX5080ローカル推論 MCP連携 Liquid SwiftUI VFXを束ねる実験室 ORA Hyperwave 最新のプロトタイプと映像をここに集約</p>
-      <div class="chips">
-        <span class="chip">RTX5080 Hybrid Cluster</span>
-        <span class="chip">ORA MCP Agents</span>
-        <span class="chip">Liquid SwiftUI Systems</span>
-        <span class="chip">Procedural VFX Nodes</span>
-        <span class="chip">Hyperstream Updates</span>
-      </div>
-    </section>
+      <span class="display">YoneRai12 | ORA Hyperwave</span>
+      <h1>未来都市のUIを今日に着陸させる</h1>
+      <p class="lead">RTX5080ローカル推論 MCP連携 Liquid SwiftUI VFXを束ねる実験室 ORA Hyperwave 最新のプロトタイプと映像をここに集約</p>
+      <p class="profile-long">RTX5080のローカル推論とクラウドをハイブリッド接続し MCPでツール連携 Liquid SwiftUIとVFXで未来都市のUIを設計するラボ ORA Hyperwave プロトタイプを最短距離で公開し DiscordとXのハイパーストリームで日次更新 GitHubでコードを開き Webポータルで体験を触ってほしい</p>
 
-    <section class="cta-area">
-      <div class="cta-grid">
-        <a class="cta-card hot" data-spotlight href="https://xs413759.xsrv.jp" target="_blank" rel="noopener noreferrer">
-          <div class="cta-media" aria-hidden="true">
-            <svg viewBox="0 0 128 128" role="img" aria-hidden="true">
-              <defs>
-                <linearGradient id="logo-card" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#6ef3ff" />
-                  <stop offset="45%" stop-color="#7699ff" />
-                  <stop offset="100%" stop-color="#ff77ff" />
-                </linearGradient>
-              </defs>
-              <rect width="128" height="128" rx="28" fill="#040616"></rect>
-              <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="url(#logo-card)"></path>
-            </svg>
-          </div>
-          <div class="cta-content">
-            <span>ENTER</span>
-            <strong>Enter ORA Portal</strong>
-            <p>都市型インターフェースの最新ビルドを試すハイパーリンク。ライブ VFX と MCP オペレーションを一気に体験できます。</p>
+      <div class="chips">
+        <span class="chip">Realtime AI Orchestration</span>
+        <span class="chip">MCP Federation</span>
+        <span class="chip">Liquid SwiftUI</span>
+        <span class="chip">Procedural VFX Nodes</span>
+        <span class="chip">Hyperstream Daily</span>
+      </div>
+
+      <div class="cta-feature-grid">
+        <a class="cta-feature hot" data-spotlight href="https://xs413759.xsrv.jp" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 128 128" role="img" aria-hidden="true">
+            <rect width="128" height="128" rx="28" fill="#040616"></rect>
+            <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#ff77ff"></path>
+          </svg>
+          <div class="cta-body">
+            <span>Portal Access</span>
+            <h3>Enter ORA Portal</h3>
+            <p>未来都市型のUIデモと映像プロトタイプを集約した中枢ハブへジャンプ</p>
           </div>
         </a>
-        <a class="cta-card" data-spotlight href="https://discord.gg/MqWp8TFQwy" target="_blank" rel="noopener noreferrer">
-          <div class="cta-media" aria-hidden="true">
-            <svg viewBox="0 0 128 128" role="img" aria-hidden="true">
-              <defs>
-                <linearGradient id="logo-card-secondary" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#6ef3ff" />
-                  <stop offset="45%" stop-color="#7699ff" />
-                  <stop offset="100%" stop-color="#ff77ff" />
-                </linearGradient>
-              </defs>
-              <rect width="128" height="128" rx="28" fill="#040616"></rect>
-              <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="url(#logo-card-secondary)"></path>
-            </svg>
-          </div>
-          <div class="cta-content">
-            <span>CONNECT</span>
-            <strong>Join Discord</strong>
-            <p>開発ログとマテリアル共有を行うハイパーストリーム。日次レポートとライブコラボが行き交う中枢です。</p>
+
+        <a class="cta-feature hot" data-spotlight href="https://discord.gg/MqWp8TFQwy" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 128 128" role="img" aria-hidden="true">
+            <rect width="128" height="128" rx="28" fill="#040616"></rect>
+            <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#ff77ff"></path>
+          </svg>
+          <div class="cta-body">
+            <span>Community Signal</span>
+            <h3>Join Discord</h3>
+            <p>Hyperstreamでの制作ログとベータ配信をリアルタイムで受け取るハブ</p>
           </div>
         </a>
       </div>
-      <div class="button-row">
-        <a class="btn hot" data-spotlight href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a class="btn cool" data-spotlight href="https://x.com/YoneRai12" target="_blank" rel="noopener noreferrer">X Hyperstream</a>
-        <a class="btn cool" data-spotlight href="https://www.youtube.com/@YoneRai12" target="_blank" rel="noopener noreferrer">YouTube Showreel</a>
-        <a class="btn cool" data-spotlight href="https://github.com/YoneRai12/ORA-Mobile" target="_blank" rel="noopener noreferrer">ORA Mobile Beta</a>
+
+      <div class="cta-buttons">
+        <a class="btn" data-spotlight href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">
+          <svg class="ora-icon" viewBox="0 0 128 128" role="img" aria-hidden="true">
+            <rect width="128" height="128" rx="28" fill="#040616"></rect>
+            <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#7699ff"></path>
+          </svg>
+          <span>GitHub</span>
+        </a>
+        <a class="btn" data-spotlight href="https://x.com/YoneRai12" target="_blank" rel="noopener noreferrer">
+          <svg class="ora-icon" viewBox="0 0 128 128" role="img" aria-hidden="true">
+            <rect width="128" height="128" rx="28" fill="#040616"></rect>
+            <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#7699ff"></path>
+          </svg>
+          <span>X Hyperstream</span>
+        </a>
+        <a class="btn" data-spotlight href="https://www.youtube.com/@YoneRai12/videos" target="_blank" rel="noopener noreferrer">
+          <svg class="ora-icon" viewBox="0 0 128 128" role="img" aria-hidden="true">
+            <rect width="128" height="128" rx="28" fill="#040616"></rect>
+            <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#7699ff"></path>
+          </svg>
+          <span>YouTube Showreel</span>
+        </a>
+        <a class="btn" data-spotlight href="#mobile">
+          <svg class="ora-icon" viewBox="0 0 128 128" role="img" aria-hidden="true">
+            <rect width="128" height="128" rx="28" fill="#040616"></rect>
+            <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#7699ff"></path>
+          </svg>
+          <span>ORA Mobile Beta</span>
+        </a>
       </div>
-      <div class="anchor-links" aria-label="セクションショートカット">
-        <a href="#llm">– ORA LLM Stack</a>
-        <a href="#swiftui">– Liquid SwiftUI Lab</a>
+
+      <div class="headline-links">
+        <a href="#stack">– ORA LLM Stack</a>
+        <a href="#liquid">– Liquid SwiftUI Lab</a>
         <a href="#vfx">– VFX Nodes Library</a>
       </div>
     </section>
 
-    <section id="profile" class="profile-section">
-      <div class="module" data-spotlight>
-        <span class="mono">PROFILE</span>
-        <h3>未来都市UIを設計する研究開発ラボ</h3>
-        <p class="profile-long">RTX5080のローカル推論とクラウドをハイブリッド接続し MCPでツール連携 Liquid SwiftUIとVFXで未来都市のUIを設計するラボ ORA Hyperwave プロトタイプを最短距離で公開し DiscordとXのハイパーストリームで日次更新 GitHubでコードを開き Webポータルで体験を触ってほしい</p>
-      </div>
-    </section>
-
-    <section id="llm">
+    <section id="stack">
       <div class="section-title">ORA LLM Stack</div>
-      <div class="module" data-spotlight>
-        <span class="mono">CORE PIPELINE</span>
-        <h3>RTX5080 ローカル推論 × MCP オーケストレーション</h3>
-        <p>GPU ローカルクラスタとクラウドノードを束ね マルチエージェント MCP が VFX ツールや SwiftUI プロジェクトを横断制御。Hyperstream Telemetry が秒単位で稼働ログを収集し プロトタイプを即日で公開します。</p>
-      </div>
       <div class="grid cols-3">
         <article class="card" data-spotlight>
-          <span class="mono">HARDWARE</span>
-          <h3>Hybrid Compute Bank</h3>
-          <p>RTX5080 ノードとクラウド GPU を負荷に応じて切り替え。推論とレンダリングを同一タイムラインで同期させます。</p>
+          <span class="mono">HYBRID COMPUTE</span>
+          <h3>RTX5080 × クラウド連携</h3>
+          <p>ローカルのRTX5080ノードとクラウドGPUを束ね 推論ジョブを瞬時に切り替える構成 レンダリングとAI処理を同じタイムラインで走らせる</p>
         </article>
         <article class="card" data-spotlight>
-          <span class="mono">AGENTS</span>
-          <h3>MCP Control Mesh</h3>
-          <p>Multi-Agent Control Protocol を基盤にしたワークフロー。チャットとジェスチャでシーン構築からコード発行まで連結。</p>
+          <span class="mono">MCP ORCHESTRATION</span>
+          <h3>Toolchain Federation</h3>
+          <p>MCPでBlender VFX SwiftUI IDEを結線 チャットからコマンドを送り VFX生成やコード整備を自動化するハイパーフローを構築</p>
         </article>
         <article class="card" data-spotlight>
-          <span class="mono">TELEMETRY</span>
-          <h3>Hyperstream Analytics</h3>
-          <p>日次で稼働メトリクスをログ化し PV・CTR を解析。最も反響のあるユニットをトップへ再配置する運用フロー。</p>
+          <span class="mono">REALTIME DELIVERY</span>
+          <h3>Hyperstream Pipeline</h3>
+          <p>プロトタイプを即日で公開する配信ライン GitHub Pagesとポータルを同期し コミュニティへ日次でドロップ</p>
         </article>
       </div>
     </section>
 
-    <section id="swiftui">
+    <section id="liquid">
       <div class="section-title">Liquid SwiftUI Lab</div>
       <div class="grid cols-2">
         <article class="module" data-spotlight>
-          <span class="mono">LIQUID DESIGN</span>
-          <h3>触れると揺らぐダイナミックコンポーネント</h3>
-          <p>Metal Shader Graph と SwiftUI Custom Layout を組み合わせた液体インタラクション。触感を想起させるマテリアルで Vision Pro / iOS / macOS を横断します。</p>
+          <span class="mono">LIQUID INTERFACE</span>
+          <h3>SwiftUI Liquid Systems</h3>
+          <p>Fluid Gradient マテリアルと Dynamic Color を組み合わせた SwiftUI レイアウトを研究 Vision Pro から iPhone まで統一した触感を設計</p>
+          <div class="cta-buttons">
+            <a class="btn" data-spotlight href="https://github.com/YoneRai12" target="_blank" rel="noopener noreferrer">
+              <svg class="ora-icon" viewBox="0 0 128 128" role="img" aria-hidden="true">
+                <rect width="128" height="128" rx="28" fill="#040616"></rect>
+                <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#7699ff"></path>
+              </svg>
+              <span>Pattern Docs</span>
+            </a>
+          </div>
         </article>
+
+        <article class="module" data-spotlight id="mobile">
+          <span class="mono">ORA MOBILE BETA</span>
+          <h3>Vision Pro / iOS マルチデバイス</h3>
+          <p>Liquid SwiftUI を採用したマルチデバイスクライアント TestFlight での配信と GitHub Issue でのフィードバックサイクルを準備中</p>
+          <div class="cta-buttons">
+            <a class="btn hot" data-spotlight href="https://discord.gg/MqWp8TFQwy" target="_blank" rel="noopener noreferrer">
+              <svg class="ora-icon" viewBox="0 0 128 128" role="img" aria-hidden="true">
+                <rect width="128" height="128" rx="28" fill="#040616"></rect>
+                <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#ff77ff"></path>
+              </svg>
+              <span>TestFlight Request</span>
+            </a>
+            <a class="btn" data-spotlight href="https://github.com/YoneRai12?tab=repositories" target="_blank" rel="noopener noreferrer">
+              <svg class="ora-icon" viewBox="0 0 128 128" role="img" aria-hidden="true">
+                <rect width="128" height="128" rx="28" fill="#040616"></rect>
+                <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#7699ff"></path>
+              </svg>
+              <span>GitHub Roadmap</span>
+            </a>
+          </div>
+        </article>
+
         <article class="module" data-spotlight>
-          <span class="mono">MULTI PLATFORM</span>
-          <h3>Liquid Glass UI クライアント</h3>
-          <p>ORA Mobile Beta がマルチデバイス連携を提供。TestFlight と GitHub ビルドで日次の UI 改良を同期し Hyperwave Portal と連結。</p>
-        </article>
-      </div>
-      <div class="grid cols-3">
-        <article class="card" data-spotlight>
-          <span class="mono">MATERIAL</span>
-          <h3>Dynamic Color Fields</h3>
-          <p>環境光とユースケースに応じてシェーダーをリアルタイム再構成。Liquid SwiftUI のテーマを自動調整します。</p>
-        </article>
-        <article class="card" data-spotlight>
-          <span class="mono">PROTOTYPING</span>
-          <h3>Zero-Delay Deploy</h3>
-          <p>GitHub Actions と Fastlane を駆使し 新しい UI フローをハイパーストリームへ即時反映。フィードバックを循環させます。</p>
-        </article>
-        <article class="card" data-spotlight>
-          <span class="mono">COLLAB</span>
-          <h3>LLM Assisted Design</h3>
-          <p>LLM が SwiftUI コードとアセットのスケッチを生成。ラボメンバーがリファインし プロトタイプを高速化します。</p>
+          <span class="mono">HYPERSTREAM UI</span>
+          <h3>Live Dashboard & Widgets</h3>
+          <p>Hyperstream で配信する KPI とレンダリング進捗を SwiftUI Widget と Web Dashboard に同時配信 通知レイヤーは MCP で自動化</p>
+          <div class="cta-buttons">
+            <a class="btn" data-spotlight href="https://xs413759.xsrv.jp" target="_blank" rel="noopener noreferrer">
+              <svg class="ora-icon" viewBox="0 0 128 128" role="img" aria-hidden="true">
+                <rect width="128" height="128" rx="28" fill="#040616"></rect>
+                <path d="M28 88c0-28 18-48 36-48s36 20 36 48h-18c0-18-10-28-18-28s-18 10-18 28z" fill="#7699ff"></path>
+              </svg>
+              <span>Portal Preview</span>
+            </a>
+          </div>
         </article>
       </div>
     </section>
 
     <section id="vfx">
       <div class="section-title">VFX Nodes Library</div>
-      <div class="module" data-spotlight>
-        <span class="mono">PROCEDURAL BANK</span>
-        <h3>ノード合成で生まれる都市型エフェクト</h3>
-        <p>Blender と独自ノードを組み合わせたプラズマ・霧・爆発プリセット。MCP エージェントがパラメータを調整し WebGL に即時エクスポートします。</p>
-      </div>
       <div class="grid cols-3">
         <article class="card" data-spotlight>
-          <span class="mono">BURST</span>
-          <h3>Procedural Shockwaves</h3>
-          <p>リズム解析で波形を生成し UI と同期した衝撃波を描画。都市の光脈を可視化します。</p>
+          <span class="mono">PROCEDURAL CORE</span>
+          <h3>Plasma & City Atmos</h3>
+          <p>プラズマ・霧・ネオンサインのノードプリセットを管理 MCP エージェントが Blender と After Effects に一括配信</p>
         </article>
         <article class="card" data-spotlight>
-          <span class="mono">FOG</span>
-          <h3>Volumetric Streets</h3>
-          <p>空間に浮かぶ微細な粒子を WebGL で再現。Future City の視界を柔らかく演出し 情報の層を重ねます。</p>
+          <span class="mono">RENDER STREAM</span>
+          <h3>Hyperwave Shots</h3>
+          <p>RTX5080 のローカルレンダリングを Hyperstream へダイレクト出力 Discord でフィードバックを受け再レンダリングを自動化</p>
         </article>
         <article class="card" data-spotlight>
-          <span class="mono">PORTAL</span>
-          <h3>Hyperwave Gateway</h3>
-          <p>VFX ノードを UI トランジションに変換。ポータル遷移を視覚化し ORA Portal の没入感を高めます。</p>
+          <span class="mono">SHADER LAB</span>
+          <h3>Liquid Neon Toolkit</h3>
+          <p>色彩パレットを #7699ff #ff77ff #6ef3ff で統一したマテリアルを整備 SwiftUI と WebGL 両方で同じ質感を再現</p>
         </article>
       </div>
     </section>
 
-    <section id="signal">
-      <div class="section-title">Signal Log & Ops</div>
-      <div class="grid cols-2">
-        <article class="card" data-spotlight>
-          <h3>運用ルール</h3>
-          <p>・週1でPVとクリック率をモニタリングし 高CTRの2件を上段に固定<br>・低CTRリンクは文言を短縮または下段へ移動<br>・隔週でショーリールを更新し サムネイルを統一<br>・月次でGitHub Pagesと文言を同期</p>
-        </article>
+    <section id="ops">
+      <div class="section-title">Operations Protocol</div>
+      <div class="grid">
         <article class="card" data-spotlight>
           <h3>ミッション</h3>
-          <p>Hyperwave の目的は ユーザーに未来を先取りして触れている感覚を届けること。ビジュアルと技術を融合し 実験的な体験を即座に公開します。</p>
+          <p>未来都市のUIを今日に着陸させるという合言葉で Realtime AI × VFX × SwiftUI の実験を束ね 即時に触れる状態で公開し続ける</p>
+        </article>
+        <article class="card" data-spotlight>
+          <h3>データリズム</h3>
+          <p>Hyperstreamで収集したPVとクリック率を週次で解析 高CTRの2件はポータル最上段に固定し 低CTRコンテンツは文言最適化か下段移動</p>
+        </article>
+        <article class="card" data-spotlight>
+          <h3>配信ノード</h3>
+          <p>DiscordとXでのハイパーストリーム更新を日次運用 GitHub PagesとWebポータルのコピーを毎月同期し ショーリールは隔週で刷新</p>
         </article>
       </div>
-      <div class="grid cols-2" style="margin-top:18px;">
-        <article class="card" data-spotlight>
-          <h3>アクセスチャネル</h3>
-          <p>GitHub Discord X Hyperstream で最新のレンダリング結果や AI ツールチェーンを配信。ラボの各種プロトタイプを即座に体験できます。</p>
-        </article>
-        <article class="card" data-spotlight>
-          <h3>アップデート</h3>
-          <div class="timeline" aria-label="Latest signals">
-            <div class="t-item">
-              <h4>2024.06 · Liquid SwiftUI Beta</h4>
-              <p>物理ベースのマテリアルシステムを実装。ライブデータの視覚化を実現し Vision Pro UI に反映。</p>
-            </div>
-            <div class="t-item">
-              <h4>2024.05 · MCP Hyper Agents</h4>
-              <p>LLM エージェントが VFX ノードと Blender を操作し 自動でシーンを生成して Web 用アセットに最適化。</p>
-            </div>
-            <div class="t-item">
-              <h4>2024.04 · Hyperstream Infra</h4>
-              <p>低遅延なストリーミング基盤を構築。GPU レンダリングの過程をライブ共有し フィードバックを即応。</p>
-            </div>
-          </div>
-        </article>
+
+      <div class="timeline" aria-label="Operations cadence">
+        <div class="t-item">
+          <h4>Weekly · PV / CTR Review</h4>
+          <p>最もクリックされた2件を上部固定に更新 低CTRのカードはヘッドラインを短縮し配置を見直す</p>
+        </div>
+        <div class="t-item">
+          <h4>Biweekly · Showreel Refresh</h4>
+          <p>YouTube Showreel を隔週で差し替え サムネイルとカラーリングを Hyperwave パレットで統一</p>
+        </div>
+        <div class="t-item">
+          <h4>Monthly · Pages Sync</h4>
+          <p>GitHub Pages と ORA Portal の文言および CTA を月次で同期 MCP チェックリストで差分を検証</p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    © <span id="year"></span> YoneRai12 · Hyperwave on GitHub Pages · <a href="https://xs413759.xsrv.jp" target="_blank" rel="noopener noreferrer">Enter ORA</a>
+    © <span id="year"></span> YoneRai12 · Hyperwave on GitHub Pages · <a href="https://xs413759.xsrv.jp/" target="_blank" rel="noopener noreferrer">Enter ORA</a>
   </footer>
 
   <script>
     const yearEl = document.getElementById('year');
-    if(yearEl){
-      yearEl.textContent = new Date().getFullYear();
-    }
+    if(yearEl){ yearEl.textContent = new Date().getFullYear(); }
 
-    const heroHeading = document.querySelector('.hero h1');
-    const heroTagline = document.querySelector('.hero .tagline');
+    const hero = document.querySelector('.hero h1');
     const phrases = [
-      {title: 'Realtime AI × VFX × SwiftUI', tagline: '未来都市のUIを今日に着陸させる'},
-      {title: 'RTX5080 Hyperlocal Compute', tagline: '秒単位で更新する LLM × MCP ワークフロー'},
-      {title: 'Liquid SwiftUI Systems', tagline: '触れるたびに揺らぐダイナミックコンポーネント'},
-      {title: 'ORA Hyperwave Portal', tagline: '都市型インターフェースをライブで公開'},
-      {title: 'Hyperstream Operations', tagline: '高CTRユニットを最前面に再配置する運用'}
+      hero.textContent,
+      'Realtime AI × VFX × SwiftUI',
+      'ORA LLM Stack',
+      'Liquid SwiftUI Lab',
+      'VFX Nodes Library',
+      'Hyperstream Daily Update'
     ];
-    let phraseIndex = 0;
-    if(heroHeading && heroTagline){
-      setInterval(()=>{
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        heroHeading.style.opacity = 0;
-        heroTagline.style.opacity = 0;
-        setTimeout(()=>{
-          heroHeading.textContent = phrases[phraseIndex].title;
-          heroTagline.textContent = phrases[phraseIndex].tagline;
-          heroHeading.style.opacity = 1;
-          heroTagline.style.opacity = 1;
-        }, 260);
-      }, 5200);
-    }
+    let index = 0;
+    setInterval(()=>{
+      index = (index + 1) % phrases.length;
+      hero.style.opacity = 0;
+      setTimeout(()=>{ hero.textContent = phrases[index]; hero.style.opacity = 1; }, 240);
+    }, 4200);
 
+    /* Spotlight follow effect for [data-spotlight] */
     const interactiveSelector = '[data-spotlight]';
     const interactiveElements = document.querySelectorAll(interactiveSelector);
     const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
@@ -535,8 +504,7 @@
         const rect = el.getBoundingClientRect();
         const clientX = typeof event.clientX === 'number' ? event.clientX : rect.left + rect.width / 2;
         const clientY = typeof event.clientY === 'number' ? event.clientY : rect.top + rect.height / 2;
-        const x = clientX - rect.left;
-        const y = clientY - rect.top;
+        const x = clientX - rect.left; const y = clientY - rect.top;
         el.style.setProperty('--spot-x', `${x}px`);
         el.style.setProperty('--spot-y', `${y}px`);
         el.style.setProperty('--spot-opacity', '1');
@@ -544,55 +512,33 @@
 
       const queueSpotlight = (el, event)=>{
         if(frameId) cancelAnimationFrame(frameId);
-        frameId = requestAnimationFrame(()=>{
-          frameId = null;
-          setSpotlight(el, event);
-        });
+        frameId = requestAnimationFrame(()=>{ frameId = null; setSpotlight(el, event); });
       };
 
       const clearSpotlight = (el)=>{
-        if(activeSpotlight === el && frameId){
-          cancelAnimationFrame(frameId);
-          frameId = null;
-        }
+        if(activeSpotlight === el && frameId){ cancelAnimationFrame(frameId); frameId = null; }
         el.style.setProperty('--spot-opacity', '0');
       };
 
-      const handlePointerMove = (event)=>{
-        if(!activeSpotlight) return;
-        queueSpotlight(activeSpotlight, event);
-      };
-
+      const handlePointerMove = (event)=>{ if(!activeSpotlight) return; queueSpotlight(activeSpotlight, event); };
       const handlePointerOver = (event)=>{
         const target = event.target.closest(interactiveSelector);
         if(!target) return;
-        if(activeSpotlight && activeSpotlight !== target){
-          clearSpotlight(activeSpotlight);
-        }
-        activeSpotlight = target;
-        queueSpotlight(target, event);
+        if(activeSpotlight && activeSpotlight !== target){ clearSpotlight(activeSpotlight); }
+        activeSpotlight = target; queueSpotlight(target, event);
       };
-
       const handlePointerOut = (event)=>{
         const target = event.target.closest(interactiveSelector);
         if(!target) return;
         const next = event.relatedTarget instanceof Element ? event.relatedTarget.closest(interactiveSelector) : null;
-
         clearSpotlight(target);
-
         if(activeSpotlight === target){
           activeSpotlight = next || null;
-          if(activeSpotlight){
-            queueSpotlight(activeSpotlight, event);
-          }
+          if(activeSpotlight){ queueSpotlight(activeSpotlight, event); }
         }
       };
-
       const handlePointerLeave = ()=>{
-        if(activeSpotlight){
-          clearSpotlight(activeSpotlight);
-          activeSpotlight = null;
-        }
+        if(activeSpotlight){ clearSpotlight(activeSpotlight); activeSpotlight = null; }
       };
 
       document.addEventListener('pointermove', handlePointerMove);
